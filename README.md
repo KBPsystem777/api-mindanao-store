@@ -2,6 +2,6 @@
 
 ![Node.js CI](https://github.com/KBPsystem777/cpia-server/workflows/Node.js%20CI/badge.svg)
 
-# cpia-server
+# MindanaoStore API
 
-backend server for CPIA
+Backend server for Mindanao Store

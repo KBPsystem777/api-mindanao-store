@@ -1,7 +1,17 @@
 {
-  "name": "cpia-server",
+  "name": "mindanao-store-api",
   "version": 2,
-  "env": {
-    "MONGODB_URI": "@cpia-mongo-uri"
-  }
+  "builds": [{ "src": "index.js", "use": "@now/node-server" }],
+  "routes": [
+    {
+      "src": "/api/users",
+      "dest": "/index.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/api/users/add",
+      "dest": "/index.js",
+      "methods": ["POST"]
+    }
+  ]
 }

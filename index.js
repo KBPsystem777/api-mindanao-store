@@ -50,6 +50,11 @@ const usersRouter = require("./routes/users");
 app.use("/api/products", productsRouter);
 app.use("/api/users", usersRouter);
 
+// Display welcome page on server run
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
+
 // Run server
 app.listen(port, () => {
   console.log(Date() + ` Server running on port: ${port}`);

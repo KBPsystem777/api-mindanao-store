@@ -29,12 +29,12 @@ mongoose
   })
   .catch((err) => console.log(new Date() + `Error: ${err}`));
 
-const connection = mongoose.connection;
-connection
-  .once("open", () => {
-    console.log(Date() + ` Database connection established!`);
-  })
-  .catch((err) => console.log(new Date() + `Error: ${err}`));
+mongoose.connection.once("open", () => {
+  console.log(Date() + ` Database connection established!`);
+});
+mongoose.connection.on("error", (err) => {
+  console.log(Date() + `Error_message: ${err}`);
+});
 
 // Use Morgan for logging
 app.use(

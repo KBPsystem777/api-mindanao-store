@@ -1,11 +1,11 @@
 {
-  "name": "cpia-server",
+  "name": "mindanao-store-api",
   "version": "1.0.0",
-  "description": "backend for cpia",
-  "main": "server.js",
+  "description": "API services for MindanaoStore",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",

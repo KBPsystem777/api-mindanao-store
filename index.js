@@ -21,19 +21,25 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 const uri = process.env.MONGODB_URI;
 
 // Establish connection to mongoose
-mongoose.Promise = global.Promise;
-mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((res) => console.log(new Date() + "Database connection established!"))
-  .catch((err) => console.log(new Date() + `Encountered an error: ${err}`));
-
-// Display welcome page!
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
 });
 
-// Building Routes
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log(Date() + ` Database connection established!`);
+});
 
+// Use Morgan for logging
+app.use(
+  morgan(
+    ":date[web] :method :url :status :res[content-length] - :response-time ms"
+  )
+);
+
+// Building Routes
 // Routes for products
 const productsRouter = require("./routes/products");
 
@@ -44,13 +50,7 @@ const usersRouter = require("./routes/users");
 app.use("/api/products", productsRouter);
 app.use("/api/users", usersRouter);
 
-// Use Morgan for logging
-app.use(
-  morgan(
-    ":date[web] :method :url :status :res[content-length] - :response-time ms"
-  )
-);
-
+// Run server
 app.listen(port, () => {
   console.log(Date() + ` Server running on port: ${port}`);
 });

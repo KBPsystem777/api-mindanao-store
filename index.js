@@ -21,13 +21,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 const uri = process.env.MONGODB_URI;
 
 // Establish connection to mongoose
-mongoose
-  .connect(uri, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  })
-  .catch((err) => console.log(`ErrorMessage:  ${err}`));
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+});
 
 const connection = mongoose.connection;
 connection.once("open", () => {

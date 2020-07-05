@@ -101,8 +101,8 @@ router.route("/delete/:id").put((req, res) => {
     user.save().then(() =>
       res.json({
         success: true,
-        message: `User ${req.params.id} has been deleted!`,
         time: new Date(),
+        message: `User ${req.params.id} has been deleted!`,
       })
     );
   });

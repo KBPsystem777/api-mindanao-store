@@ -46,13 +46,15 @@ app.use(
 // Building Routes
 // Routes for products
 const productsRouter = require("./routes/products");
-
 // Routes for users
 const usersRouter = require("./routes/users");
+// Routes for Store
+const storeRouter = require("./routes/store");
 
 // Build address routes
 app.use("/api/products", productsRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/store", storeRouter);
 
 // Display welcome page on server run
 app.get("/", (req, res) => {

@@ -1,47 +1,79 @@
-const router = require("express").Router();
+const express = require("express");
+const router = express.Router();
 
 let Product = require("../models/productModel");
 
-router.route("/").get((req, res) => {
-  Product.find()
-    .then((products) => res.json(products))
-    .catch((err) => res.json(400).json(`Error: ` + err));
-});
-
 // Fields needed for Product
 router.route("/add").post((req, res) => {
-  const productName = req.body.productName;
+  const product_name = req.body.name;
   const price = req.body.price;
   const category = req.body.category;
   const quantity = Number(req.body.quantity);
-  const expirationDate = Date.parse(req.body.expirationDate);
+  const details = req.body.details;
 
   const newProduct = new Product({
-    productName,
+    product_name,
     price,
     category,
     quantity,
-    expirationDate,
+    details,
   });
   // Save new product
   newProduct
     .save()
-    .then(() => res.json(`Product Added!`))
-    .catch((err) => res.status(400).json(`Error: ` + err));
+    .then(() =>
+      res.json({
+        success: true,
+        message: "Product Added!",
+        time: new Date(),
+        product: newProduct,
+      })
+    )
+    .catch((err) =>
+      res.status(400).json({
+        success: false,
+        message: `Error: ` + err,
+      })
+    );
+});
+
+// Route to get all Products of the store
+router.route("/:id/products").get((req, res) => {
+  Product.find()
+    .then((products) => res.json(products))
+    .catch((err) =>
+      res.json(400).json({
+        success: false,
+        time: new Date(),
+        message: `Error: ` + err,
+      })
+    );
 });
 
 // Get products records by ID#
 router.route("/:id").get((req, res) => {
   Product.findById(req.params.id)
     .then((product) => res.json(product))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) =>
+      res.status(400).json({
+        success: false,
+        time: new Date(),
+        message: `Error: ` + err,
+      })
+    );
 });
 
 // Delete a product record
 router.route("/:id").delete((req, res) => {
   Product.findByIdAndDelete(req.params.id)
     .then(() => res.json(`Product deleted!`))
-    .catch((err) => res.json(400).json(`Error: ` + err));
+    .catch((err) =>
+      res.json(400).json({
+        success: false,
+        time: new Date(),
+        message: `Error: ` + err,
+      })
+    );
 });
 
 // Update an existing product
@@ -56,7 +88,13 @@ router.route("/update/:id").post((req, res) => {
 
       product.save().then(() => res.json(`Product updated!`));
     })
-    .catch((err) => res.status(400).json(`Error: ` + err));
+    .catch((err) =>
+      res.status(400).json({
+        success: false,
+        time: new Date(),
+        message: `Error: ` + err,
+      })
+    );
 });
 
 module.exports = router;

@@ -81,4 +81,19 @@ router.route("/:id").get((req, res) => {
       })
     );
 });
+
+// Router to delete a Store
+// Not really deleting the store but turning them OFF
+router.route("/delete/:id").put((req, res) => {
+  Store.findByIdAndUpdate(req.params.id).then((store) => {
+    store.active = false;
+    store.save().then(() => {
+      res.json({
+        success: true,
+        time: new Date(),
+        message: `Store ${req.params.id} has been deleted!`,
+      });
+    });
+  });
+});
 module.exports = router;

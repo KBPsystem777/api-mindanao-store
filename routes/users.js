@@ -85,7 +85,7 @@ router.route("/edit/:id").put((req, res) => {
         res.json({
           success: true,
           message: "User updated!",
-          data: user,
+          user: user,
           time: new Date(),
         })
       );

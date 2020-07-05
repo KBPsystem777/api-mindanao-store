@@ -82,6 +82,30 @@ router.route("/:id").get((req, res) => {
     );
 });
 
+// Route to update a specific Store
+router.route("/edit/:id").put((req, res) => {
+  Store.findByIdAndUpdate(req.params.id).then((store) => {
+    store.mobile = req.body.mobile;
+    store.store_address = req.body.address;
+    store
+      .save()
+      .then(() => {
+        res.json({
+          success: true,
+          message: "Store Updated!",
+          time: new Date(),
+          store: store,
+        });
+      })
+      .catch((err) =>
+        res.json({
+          success: false,
+          message: `Error: ${err}`,
+        })
+      );
+  });
+});
+
 // Router to delete a Store
 // Not really deleting the store but turning them OFF
 router.route("/delete/:id").put((req, res) => {

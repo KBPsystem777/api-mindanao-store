@@ -16,6 +16,7 @@ const userSchema = new Schema(
     name: { type: String, required: true },
     last_name: { type: String, required: true },
     address: { type: String, required: true },
+    stores: { type: String },
   },
   { timestamps: true }
 );

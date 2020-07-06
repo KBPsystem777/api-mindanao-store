@@ -13,6 +13,7 @@ router.route("/add").post((req, res) => {
   const mobile = req.body.mobile;
   const store_address = req.body.address;
   const store_owner = req.body.owner;
+  const store_owner_id = req.body.owner_id;
   const store_owner_email = req.body.owner_email;
 
   // Route to create Store
@@ -24,6 +25,7 @@ router.route("/add").post((req, res) => {
     mobile,
     store_address,
     store_owner,
+    store_owner_id,
     store_owner_email,
   });
 

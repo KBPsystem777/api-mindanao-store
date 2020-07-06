@@ -3,19 +3,22 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+const helmet = require("helmet");
 
 require("dotenv").config();
 
 // Pass express() to app
 const app = express();
 
-// Declare port
-const port = process.env.PORT || 1960;
-
+// Declare Middlewares
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+// Declare port
+const port = process.env.PORT || 1960;
 
 // Pull the mongoose connection address
 const uri = process.env.MONGODB_URI;

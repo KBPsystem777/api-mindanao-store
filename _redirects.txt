@@ -1,0 +1,2 @@
+/api/users		https://mindanao-store-api.herokuapp.com/api/users
+/api/store		https://mindanao-store-api.herokuapp.com/api/store

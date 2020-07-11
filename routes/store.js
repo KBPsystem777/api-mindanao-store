@@ -35,8 +35,8 @@ router.route("/add").post((req, res) => {
       res.json({
         success: true,
         message: "Store Created!",
-        data: newStore,
         time: new Date(),
+        store: newStore,
       });
     })
     .catch((err) => {
@@ -54,6 +54,7 @@ router.route("/").get((req, res) => {
       res.json({
         success: true,
         time: new Date(),
+        count: stores.length,
         stores: stores,
       })
     )

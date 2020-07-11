@@ -1,22 +1,29 @@
 const express = require("express");
 const router = express.Router();
+const { v4: uuidv4 } = require("uuid");
 
 let Product = require("../models/productModel");
 
 // Fields needed for Product
 router.route("/add").post((req, res) => {
-  const product_name = req.body.name;
+  const _id = uuidv4();
+  const active = true;
+  const product_name = req.body.product_name;
   const price = req.body.price;
   const category = req.body.category;
   const quantity = Number(req.body.quantity);
   const details = req.body.details;
+  const store_id = req.body.store_id;
 
   const newProduct = new Product({
+    _id,
+    active,
     product_name,
     price,
     category,
     quantity,
     details,
+    store_id,
   });
   // Save new product
   newProduct
@@ -30,9 +37,28 @@ router.route("/add").post((req, res) => {
       })
     )
     .catch((err) =>
-      res.status(400).json({
+      res.json({
         success: false,
         message: `Error: ` + err,
+      })
+    );
+});
+
+// Route to get all products
+router.route("/").get((req, res) => {
+  Product.find()
+    .then((products) =>
+      res.json({
+        success: true,
+        time: new Date(),
+        products: products,
+      })
+    )
+    .catch((err) =>
+      res.status(400).json({
+        success: false,
+        time: new Date(),
+        error_message: err,
       })
     );
 });

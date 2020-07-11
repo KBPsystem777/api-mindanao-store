@@ -57,7 +57,7 @@ const storeRouter = require("./routes/store");
 // Build address routes
 app.use("/api/products", productsRouter);
 app.use("/api/users", usersRouter);
-app.use("/api/store", storeRouter);
+app.use("/api/stores", storeRouter);
 
 // Display welcome page on server run
 app.get("/", (req, res) => {

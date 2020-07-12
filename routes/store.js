@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const shortid = require("shortid");
+const { v4: uuidv4 } = require("uuid");
 
 let Store = require("../models/storeModel");
+let Product = require("../models/productModel");
 
 // Route to register a store
 router.route("/add").post((req, res) => {
@@ -67,7 +69,7 @@ router.route("/").get((req, res) => {
     );
 });
 
-// Route to get a specific Store
+// Route to get the details of a specific Store
 router.route("/:id").get((req, res) => {
   Store.findById(req.params.id)
     .then((store) => {
@@ -106,6 +108,47 @@ router.route("/edit/:id").put((req, res) => {
           message: `Error: ${err}`,
         })
       );
+  });
+});
+
+// Route to add a product to the store
+router.route("/:id/product/add").post((req, res) => {
+  Store.findByIdAndUpdate(req.params.id).then((store) => {
+    const _id = uuidv4();
+    const active = true;
+    const product_name = req.body.product_name;
+    const price = req.body.price;
+    const category = req.body.category;
+    const quantity = Number(req.body.quantity);
+    const details = req.body.details;
+    const store_id = req.body.store_id;
+
+    const addedProduct = new Product({
+      _id,
+      active,
+      product_name,
+      price,
+      category,
+      quantity,
+      details,
+      store_id,
+    });
+    store.products.push(addedProduct);
+    store
+      .save()
+      .then(() => {
+        res.json({
+          success: true,
+          time: new Date(),
+          product: addedProduct,
+        });
+      })
+      .catch((err) => {
+        res.json({
+          success: false,
+          message: `Error: ${err}`,
+        });
+      });
   });
 });
 

@@ -18,6 +18,7 @@ const storeSchema = new Schema(
     store_owner_username: { type: String },
     store_owner_id: { type: String },
     store_owner_email: { type: String, required: true },
+    products: { type: Array },
   },
   { timestamps: true }
 );
